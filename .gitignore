@@ -1,0 +1,18 @@
+# Build artifacts
+*.exe
+*.o
+*.obj
+*.log
+
+# Visual Studio
+.vs/
+
+# Emulator runtime junk
+run_out.txt
+output.txt
+debug.txt
+tempCodeRunnerFile.c
+quick
+
+# SDL runtime library (keep it out of the repo)
+SDL2.dll
