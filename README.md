@@ -1,5 +1,5 @@
 ﻿---
-### Pixelshade GB emulator
+### GBemu
 this is where i'll be adding changes, updates and whatnot
 ---
 ## TODO
