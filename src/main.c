@@ -12,14 +12,14 @@ int main() {
     mmu_init(&mmu);
     initCPU(&cpu, &mmu); 
 
-    if (!mmu_load_rom(&mmu,"./test/cpu_instrs.gb")) {
+    if (!mmu_load_rom(&mmu,"./test/tetris.gb")) {
         printf("FAILED.");
         return 1;
     }
     printf("ROM loaded successfully.\n");
 
-    ppu_init(&ppu, &mmu);
+    ppu_init(&ppu);
     mmu.ppu = &ppu;
-    run(&cpu);
+    run(&cpu, &ppu);
     return 0;
 }

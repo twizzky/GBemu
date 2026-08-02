@@ -22,10 +22,11 @@ void mmu_init(MMU *mmu) {
 uint8_t mmu_read8(MMU *mmu, uint16_t address) {
     if (address == 0xFF04) return (mmu->cpu->internal_div >> 8) & 0xFF;
     if (mmu->ppu) {
-        if (address == 0xFF44) return mmu->ppu->line;                    // LY: live PPU state
+        if(address == 0xFF00) return 0xFF;
+        if (address == 0xFF44) return mmu->ppu->current_line;        // LY: live PPU state
         if (address == 0xFF41) {                                          // STAT
             uint8_t stat = mmu->memory[0xFF41];
-            uint8_t lyc = (mmu->ppu->line == mmu->memory[0xFF45]) ? 0x04 : 0x00;
+            uint8_t lyc = (mmu->ppu->current_line == mmu->memory[0xFF45]) ? 0x04 : 0x00;
             return (stat & 0x78) | lyc | (mmu->ppu->mode & 0x03);
         }
     }
@@ -49,8 +50,8 @@ void mmu_write8(MMU *mmu, uint16_t address, uint8_t value) {
         mmu->memory[0xFF40] = value;
         // Turning the LCD off resets the PPU state machine.
         if ((old & 0x80) && !(value & 0x80)) {
-            mmu->ppu->line = 0;
-            mmu->ppu->dots = 0;
+            mmu->ppu->current_line = 0;
+            mmu->ppu->cycles = 0;
             mmu->ppu->mode = 0;
         }
         return;

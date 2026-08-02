@@ -1574,14 +1574,14 @@ void execute(CPU *cpu, uint8_t opcode) {
 
 //run: 
 int frame_counter = 0;
-void run(CPU *cpu) {
+void run(CPU *cpu, PPU *ppu) {
     int total_cycles = 0;
     
     while (true) {
         
         if (cpu->halted) {
             update_timers(cpu, 1);
-            ppu_step(cpu->mmu->ppu, 4);
+            ppu_step(ppu, cpu->mmu, cpu->cycles * 4);
             uint8_t IE = mmu_read8(cpu->mmu, 0xFFFF);
             uint8_t IF = mmu_read8(cpu->mmu, 0xFF0F);
             if (IE & IF & 0x1F) cpu->halted = 0;
@@ -1599,7 +1599,7 @@ void run(CPU *cpu) {
             }
         }
         update_timers(cpu, cpu->cycles);
-        ppu_step(cpu->mmu->ppu, cpu->cycles * 4);
+        ppu_step(ppu, cpu->mmu, cpu->cycles * 4);
         check_interrupts(cpu);
         ppu_handle_events();
     }

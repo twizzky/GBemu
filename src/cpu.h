@@ -24,6 +24,7 @@
 //CPU STRUCT:
 ///////////////////////////////////////////////////
 typedef struct MMU MMU;
+typedef struct PPU PPU;
 typedef struct CPU {
     union {  
         struct { uint8_t F, A; }; 
@@ -58,7 +59,7 @@ typedef struct CPU {
 ///////////////////////////////////////////////////
 typedef void (*OpCodeHandler)(CPU *cpu);
 void initCPU(CPU *cpu, MMU *mmu);
-void run(CPU *cpu);
+void run(CPU *cpu, PPU *ppu);
 static inline uint8_t cpu_fetch(CPU *cpu);
 extern OpCodeHandler opcode_table[256];
 /////////////////////////////////////////////////////
