@@ -3,7 +3,7 @@
 this is where i'll be adding changes, updates and whatnot
 ---
 ## TODO
-
+ 
 - [x] CPU core with 8-bit instructions
 - [x] Memory system (MMU)
 - [x] Timer registers
